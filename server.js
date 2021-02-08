@@ -9,15 +9,20 @@ dotenv.config({path: './config/config.env'})
 const transactionRoutes = require('./routes/transactionRoutes')
 
 const app = express();
-app.use(express.json());
+// parse incoming traditional HTML form submits
+app.use(express.urlencoded({ extended: false }))
+
+// parse incoming JSON payloads
+app.use(express.json())
 
 connectDB();
 
 app.use('/api/v1/transactions', transactionRoutes)
 
-if (process.env.NODE_MODE === 'production') {
+if (process.env.NODE_ENV == 'production') {
 
-    app.use(express.static('client/build'));
+    // app.use(express.static('client/build'));
+    app.use(express.static(path.join(__dirname, "client", "build")))
 
     app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')));
 
@@ -28,7 +33,7 @@ if (process.env.NODE_MODE === 'production') {
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, console.log(`The server is working on PORT ${PORT} on the ${process.env.NODE_MODE} mode`))
+app.listen(PORT)
 
 
 

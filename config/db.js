@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect(process.env.DB_URI, {
+        const conn = await mongoose.connect('mongodb+srv://mancun07:1234@cluster0.op8yb.mongodb.net/FIRST_FULLSTACK?retryWrites=true&w=majority', {
             useNewUrlParser: true,
             useCreateIndex: true,
             useUnifiedTopology: true
